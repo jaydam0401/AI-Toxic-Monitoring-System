@@ -96,37 +96,57 @@ Python의 `scikit-learn` 라이브러리를 활용해 농도 예측 모델을 �
 | 501–750 | WARNING | 주황색 |
 | 751–1023 | DANGER | 빨간색 |
 
-## 06. 실행 방법
 
-### 필요한 Python 라이브러리 설치
+
+## 06. 프로그램 실행 방법 (macOS)
+
+### 1. 필요한 Python 라이브러리 설치
 
 ```bash
 python3 -m pip install -r requirements.txt
 ```
 
-### Arduino 연결 없이 데모 실행
+### 2. Arduino USB 포트 확인
+
+Arduino UNO를 맥북에 연결하고 VS Code 터미널에서 실행합니다.
 
 ```bash
-python3 monitor_ai.py --demo
+ls /dev/cu.usb*
 ```
 
-### Arduino USB 연결 실행
+### 3. AI 농도 예측 프로그램 실행
 
 ```bash
-python3 monitor_ai.py --port /dev/cu.usbmodemXXXX
+python3 monitor_ai.py --port /dev/cu.usbmodem1101
 ```
 
-`/dev/cu.usbmodemXXXX`는 실제 연결된 포트 이름으로 변경해야 합니다.
+**주의:** `/dev/cu.usbmodem1101`은 예시이므로 실제 확인된 포트 이름으로 변경해야 합니다.
 
-Arduino는 USB Serial 통신 속도 **9600bps**로 `PPM,520` 형식의 데이터를 전송합니다.
+프로그램 실행 시 Arduino의 모의 농도 데이터를 수신하고 AI 예측값과 위험 단계를 출력하며 Excel에 자동 기록합니다.
 
-### 그래프 생성
+### 4. 측정 종료 및 Excel 파일 열기
+
+터미널에서 `Control + C`를 눌러 측정을 종료합니다.
+
+```bash
+open ppm_ai_log.xlsx
+```
+
+### 5. AI 예측 그래프 생성
 
 ```bash
 python3 ppm_graph.py
 ```
 
-프로그램 실행 후 생성된 `ppm_ai_log.xlsx`를 읽어 `ppm_ai_graph.png`를 생성합니다.
+측정값과 AI 예측값을 비교한 그래프가 표시되며 `ppm_ai_graph.png`로 저장됩니다.
+
+### 6. Arduino 없이 AI 테스트하기
+
+```bash
+python3 monitor_ai.py --demo
+```
+
+**실행 전 확인:** Arduino IDE 시리얼 모니터를 닫고, VS Code 터미널에서 Python 파일들이 저장된 폴더로 이동해야 합니다.
 
 ## 07. 프로젝트 결과
 
